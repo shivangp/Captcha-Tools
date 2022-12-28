@@ -15,6 +15,8 @@ Sites:
 1 = Capmonster
 2 = Anticaptcha
 3 = 2captcha
+4 = Capsolver
+5 = Captcha AI
 '''
 __version__ = "2.0.0"
 __author__ = "Matthew17-21"
@@ -69,6 +71,7 @@ class Harvester(ABC):
 def new_harvester(**kwargs) -> Harvester:
     # Need to import here to prevent circular imports
     from .twocap import Twocap
+    from .captchaai import CaptchaAI
     from .anticaptcha import Anticaptcha
     from .capmonster import Capmonster
     from .capsolver import Capsolver
@@ -82,6 +85,7 @@ def new_harvester(**kwargs) -> Harvester:
         return Twocap(**kwargs)
     elif site == 4 or site == "capsolver":
         return Capsolver(**kwargs)
+    elif site == 5 or site == "captchaai"
     raise captchaExceptions.NoHarvesterException("No solving site selected")
 
 
