@@ -6,7 +6,7 @@ import time
 
 BASEURL =  "https://ocr.captchaai.com/in.php
 
-class Twocap(Harvester):
+class CaptchaAI(Harvester):
     def get_balance(self) -> float:
         url = f"https://ocr.captchaai.com/res.php?key={self.api_key}&action=getbalance&json=1"
         for _ in range(5):
