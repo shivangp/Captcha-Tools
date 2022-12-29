@@ -4,7 +4,7 @@ from . import exceptions as captchaExceptions
 from typing import Optional
 import time
 
-BASEURL =  "https://ocr.captchaai.com/in.php
+BASEURL =  "https://ocr.captchaai.com/in.php"
 
 class CaptchaAI(Harvester):
     def get_balance(self) -> float:
