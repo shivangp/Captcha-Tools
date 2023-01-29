@@ -74,7 +74,7 @@ class CaptchaAI(Harvester):
         # Get token & return it
         for _ in range(50):
             try:
-                resp = requests.post(BASEURL_IN, json=payload, timeout=20).json()
+                resp = requests.post(BASEURL, json=payload, timeout=20).json()
                 if resp["status"] == 0: # Means there was an error:
                     self.check_error(resp["request"])
                 return resp["request"]
