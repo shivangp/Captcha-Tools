@@ -66,6 +66,7 @@ class CaptchaAI(Harvester):
         if kwargs.get("user_agent", None) is not None:
             payload["userAgent"] = kwargs.get("user_agent")
         return payload
+
     
     def __get_id(self,**kwargs):
         # Create Payload
@@ -74,7 +75,7 @@ class CaptchaAI(Harvester):
         # Get token & return it
         for _ in range(50):
             try:
-                resp = requests.post(BASEURL, json=payload, timeout=20).json()
+                resp = requests.post(BASEURL, data=payload, timeout=20).json()
                 if resp["status"] == 0: # Means there was an error:
                     self.check_error(resp["request"])
                 return resp["request"]
@@ -84,15 +85,16 @@ class CaptchaAI(Harvester):
     def __get_answer(self,task_id:int):
         for _ in range(100):
             try:
-                response = requests.get(f"http://ocr.captchaai.com/res.php?key={self.api_key}&action=get&id={task_id}&json=1",timeout=20,).json()
-                if response["status"] == 0 and response["request"] != "CAPCHA_NOT_READY": # Error checking
-                    self.check_error(response["request"])
-                if response["status"] == 0 and response["request"] == "CAPCHA_NOT_READY":
-                    time.sleep(4)
-                    continue
-                return response["request"] # Return the captcha token
+
+            	response = requests.get(f"http://ocr.captchaai.com/res.php?key={self.api_key}&action=get&id={task_id}&json=1",timeout=20).json()
+            	if response["status"] == 0 and response["request"] != "CAPCHA_NOT_READY": # Error checking
+            		self.check_error(response["request"])
+            	if response["status"] == 0 and response["request"] == "CAPCHA_NOT_READY":
+            		time.sleep(4)
+            		continue
+            	return response["request"] # Return the captcha token
             except (requests.RequestException, KeyError):
-                pass
+            	pass
     
     @staticmethod
     def check_error(error_code):
